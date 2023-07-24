@@ -10,3 +10,6 @@ crate-type = ["cdylib"]
 
 [dependencies]
 cosmwasm-std = { version = "1.3", features = ["staking"] }
+
+[profile.release]
+lto = true
