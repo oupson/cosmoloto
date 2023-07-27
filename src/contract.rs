@@ -1,13 +1,13 @@
-use cosmwasm_std::{
-    to_binary, Binary, Deps, DepsMut, Empty, Env, MessageInfo, Response, StdResult,
-};
+use cosmwasm_std::{DepsMut, Empty, Env, MessageInfo, Response, StdResult};
+
+use crate::state::ADMIN;
 
 pub fn instantiate(
-    _deps: DepsMut,
+    deps: DepsMut,
     _env: Env,
     info: MessageInfo,
     _msg: Empty,
 ) -> StdResult<Response> {
-    info.sender;
+    ADMIN.save(deps.storage, &info.sender)?;
     Ok(Response::new())
 }
