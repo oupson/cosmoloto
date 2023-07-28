@@ -1,8 +1,11 @@
-use cosmwasm_std::{DepsMut, Empty, Env, MessageInfo, Response, StdResult};
+use cosmwasm_std::{Deps, DepsMut, Empty, Env, MessageInfo, Response, StdResult};
 
-use crate::state::ADMIN;
+use crate::{
+    msg::{QueryMsg, QueryResp},
+    state::ADMIN,
+};
 
-pub fn instantiate(
+pub(crate) fn instantiate(
     deps: DepsMut,
     _env: Env,
     info: MessageInfo,
@@ -10,4 +13,10 @@ pub fn instantiate(
 ) -> StdResult<Response> {
     ADMIN.save(deps.storage, &info.sender)?;
     Ok(Response::new())
+}
+
+pub(crate) fn query(_deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<QueryResp> {
+    match msg {
+        QueryMsg::Donate(_) => Ok(QueryResp::new("foo")),
+    }
 }
